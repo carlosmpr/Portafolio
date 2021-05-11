@@ -1,11 +1,13 @@
 import React from "react";
 import Button from "../buttom/Button";
 import "./signin.scss";
-
+import {sigInWithGoogle} from '../../firebase/firebase'
 export default function Signin() {
+ 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  
   const handleSubmit = event => {
       event.preventDefault()
       setEmail('')
@@ -29,6 +31,9 @@ export default function Signin() {
 
         <Button type="submit" value="submit" >
             Sign in
+        </Button>
+        <Button  onClick={sigInWithGoogle} google={true}>
+            Sign in with Google
         </Button>
       </form>
     </div>
