@@ -11,7 +11,7 @@
         <header>
           <h2>Interested? Reach out now!</h2>
 
-          <base-button link :to="contactLink">Contact</base-button>
+          <base-button link :to="coachContactLink">Contact</base-button>
         </header>
         <router-view />
       </base-card>
@@ -27,6 +27,7 @@
         <p>{{ description }}</p>
       </base-card>
     </section>
+ 
   </div>
 </template>
 
@@ -53,7 +54,7 @@ export default {
       return this.selectedCoach.description;
     },
     coachContactLink() {
-      return this.$route.path + '/' + this.id + '/contact';
+      return this.$route.path +'/contact';
     }
   },
   created() {

@@ -13,4 +13,5 @@ export default {
         //dispatching the action to mutate the state
         context.commit('registerCoach',coachData)
     }
+    
 }

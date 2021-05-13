@@ -34,7 +34,7 @@ const router = createRouter({
       props:true,
       children: [
         {
-          path: '/contact',
+          path: 'contact',
           component: ContactCoach
         }
       ]
