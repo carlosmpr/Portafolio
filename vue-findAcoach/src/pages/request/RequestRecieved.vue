@@ -15,6 +15,9 @@
 <script>
 import RequestItem from '../../components/requests/RequestItem.vue'
 export default {
+  created(){
+    this.loadRequests()
+  },
 components:{
     RequestItem
 },
@@ -24,6 +27,10 @@ components:{
     },
     hasRequests() {
       return this.$store.getters['requests/hasRequests'];
+    }
+  }, methods:{
+    async loadRequests(){
+      await this.$store.dispatch('requests/fetchRequests')
     }
   }
 };

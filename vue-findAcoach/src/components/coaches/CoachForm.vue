@@ -102,7 +102,7 @@ export default {
             this.formIsValid= false;
         }
 
-         if(this.rate.val  || this.rate.val <= 0){
+         if(this.rate.val ===0  || this.rate.val <= 0){
             this.rate.isValid= false;
             this.formIsValid= false;
         }

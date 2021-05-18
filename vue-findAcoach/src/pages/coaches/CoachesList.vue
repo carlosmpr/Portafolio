@@ -1,10 +1,16 @@
 <template>
   <div>
+    <base-dialog :show="!!error" title="error ocurred">
+    <p> {{error}}</p>
+    </base-dialog>
     <coach-filter @change-filters="setFilters"/>
     <base-card>
     <div class="controls">
-      <base-button mode="outline">Refresh</base-button>
+      <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
       <base-button link to="/register" v-if="!isCoach">Register as Coach</base-button>
+    </div>
+    <div v-if="isLoading">
+      <base-spinner />
     </div>
     <ul v-if="hasCoaches">
       <coach-item
@@ -26,10 +32,15 @@
 import CoachItem from '../../components/coaches/CoachItem.vue';
 import BaseButton from '../../components/Ui/BaseButton.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue'
+import BaseDialog from '../../components/Ui/BaseDialog.vue';
 export default {
-    
+    created(){
+      this.loadCoaches();
+    },
     data(){
         return{
+          isLoading: false,
+          erro:null,
         activeFilters:{
             frontend:true,
             backend:true,
@@ -37,7 +48,7 @@ export default {
         }
         }
     },
-  components: { CoachItem, BaseButton ,CoachFilter},
+  components: { CoachItem, BaseButton ,CoachFilter, BaseDialog},
   computed: {
        
         isCoach(){
@@ -73,7 +84,7 @@ export default {
 
     hasCoaches() {
       //accessing the state $store getters using namespace
-      return this.$store.getters['coaches/hasCoaches'];
+      return !this.isLoading && this.$store.getters['coaches/hasCoaches'];
     }
   },
   methods:{
@@ -82,6 +93,18 @@ export default {
             this.activeFilters = updatedFilters;
             console.log(this.activeFilters)
             
+      },
+      async loadCoaches(){
+        this.isLoading = true;
+        try {
+          await this.$store.dispatch('coaches/loadCoaches');
+        } catch (error) {
+          console.log(error)
+          this.error = error.message || 'Something went wrong';
+        }
+        
+        this.isLoading = false;
+
       }
   }
 };
